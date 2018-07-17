@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>D2: drawing bar svg with label</title>
+    <script type="text/javascript" src="../d3/d3.js"></script>
+</head>
+<body>
+<script type="text/javascript">
+
+    var width = 500;
+    var height = 100;
+    var bar_padding = 2;
+    var data_set = [];
+
+    for (var i = 0; i < 30; i++) {
+        var item = Math.floor(Math.random() * 30);
+        data_set.push(item);
+    }
+    var svg = d3.select("body")
+        .append("svg")
+        .attr("width", width)
+        .attr("height", height);
+
+    svg.selectAll("rect")
+        .data(data_set)
+        .enter()
+        .append("rect")
+        .attr("x", function (d, i) {
+            return i * (width / data_set.length);
+        })
+        .attr("y", function (d) {
+            return height - (d * 4);
+        })
+        .attr("width", width / data_set.length - bar_padding)
+        .attr("height", function (d) {
+            return d * 4;
+        })
+        .attr("fill", function (d) {
+            return "rgb(125, 50, " + Math.round(d * 10) + ")";
+        });
+
+    svg.selectAll("text")
+        .data(data_set)
+        .enter()
+        .append("text")
+        .text(function (d) {
+            return d;
+        })
+        .attr("x", function (d, i) {
+            return i * (width / data_set.length) + 3;
+        })
+        .attr("y", function (d) {
+            return height - (d * 4) + 20;
+        })
+        .attr("font-family", "D2coding")
+        .attr("font-size", "11px")
+        .attr("fill", "white");
+</script>
+
+</body>
+</html>

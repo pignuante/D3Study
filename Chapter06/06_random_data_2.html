@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>D3 : Random data (2)</title>
+    <script type="text/javascript" src="../d3/d3.js"></script>
+    <style type="text/css">
+        div.bar {
+            display: inline-block;
+            width: 20px;
+            height: 75px; /* Gets overridden by D3-assigned height below */
+            margin-right: 2px;
+            background-color: fuchsia;
+        }
+    </style>
+</head>
+<body>
+<script type="text/javascript">
+    var data_set = [];
+    for (var i = 0; i < 25; i++) {
+        var new_number = Math.random() * 30;
+        data_set.push(new_number);
+    }
+    d3.select("body").selectAll("div")
+        .data(data_set)
+        .enter()
+        .append("div")
+        .attr("class", "bar")
+        .style("height", function (d) {
+            return d * 5 + "px";
+        })
+
+</script>
+
+</body>
+</html>

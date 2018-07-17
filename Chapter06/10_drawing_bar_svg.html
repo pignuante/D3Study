@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>D3: Drawing bar chart </title>
+    <script type="text/javascript" src="../d3/d3.js"></script>
+
+</head>
+<body>
+<script type="text/javascript">
+
+    var w = 500;
+    var h = 100;
+
+    var bar_padding = 2;
+    var data_set = [];
+    for (var i = 0; i < 40; i++) {
+        var new_value = Math.random() * 125;
+        data_set.push(new_value);
+    }
+
+    var svg = d3.select("body").append("svg").attr("width", w).attr("height", h);
+
+    svg.selectAll("rect")
+        .data(data_set)
+        .enter()
+        .append("rect")
+        .attr("x", function (d, i) {
+            return i * (w / data_set.length);
+        })
+        .attr("y", function (d) { // rect의 시작 y좌표
+            return h - d;
+        })
+        .attr("width", w/data_set.length - bar_padding)
+        .attr("height", function (d) {
+            return d * 4;
+        })
+        .attr("fill", function (d, i) {
+            if (i%2==0){
+                return "red";
+            } else{
+                return "aqua";
+            }
+        });
+
+
+</script>
+</body>
+</html>
