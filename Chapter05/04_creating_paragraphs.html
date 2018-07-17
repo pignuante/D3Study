@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>D3: Creating Paragraph</title>
+    <script type="text/javascript" src="../d3/d3.js"></script>
+</head>
+<body>
+<script type="text/javascript">
+
+    var data_set = [5, 10 ,15, 20, 25];
+    d3.select("body")
+        .selectAll("p")
+        .data(data_set)
+        .enter()
+        .append("p")
+        .text("New");
+
+</script>
+
+
+</body>
+</html>
