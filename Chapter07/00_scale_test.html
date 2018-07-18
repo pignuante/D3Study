@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>D3: Scale test</title>
+    <script type="text/javascript" src="../d3/d3.js"></script>
+    <style type="text/css">
+        svg {
+            background-color: greenyellow;
+            fill: lightyellow;
+        }
+    </style>
+</head>
+<body>
+<script type="text/javascript">
+    var width = 500;
+    var height = 500;
+    var padding = 20;
+
+    var data_set = [];
+    for (var y = 0; y < 50; y++) {
+        var temp = [Math.round(Math.random() * 400), Math.round(Math.random() * 400)];
+        data_set.push(temp);
+    }
+
+    // create scale function
+    var x_scale = d3.scaleLinear()
+        .domain([0, d3.max(data_set, function (d) {
+            return d[0];
+        })]).range([padding, width - padding * 2]);
+    var y_scale = d3.scaleLinear()
+        .domain([0, d3.max(data_set, function (d) {
+            return d[1];
+        })]).range([height - padding, padding]);
+
+
+    // crate svg
+    var svg = d3.select("body").append("svg").attr("width", width).attr("height", height);
+
+    svg.selectAll("circle")
+        .data(data_set)
+        .enter()
+        .append("circle")
+        .attr("cx", function (d) {
+            return x_scale(d[0]);
+        })
+        .attr("cy", function (d) {
+            return y_scale(d[1]);
+        })
+        .attr("r", function (d) {
+            return Math.sqrt(height - d[1]);
+        });
+    // .attr({
+    //     cx: function (d) {
+    //         return x_scale(d[0]);
+    //     },
+    //     cy: function (d) {
+    //         return y_scale(d[1]);
+    //     },
+    //     r: function (d) {
+    //         return Math.sqrt(height - d[1]);
+    //     }
+    // })
+
+    svg.selectAll("text")
+        .data(data_set)
+        .enter()
+        .append("text")
+        .text(function (d) {
+            return d[0] + "," + d[1];
+        })
+        .attr("x", function (d) {
+            return x_scale(d[0]);
+        })
+        .attr("y", function (d) {
+            return y_scale(d[1]);
+        })
+        .attr("font-family", "D2coding")
+        .attr("font-size", "11px")
+        .attr("fill", "red");
+
+
+</script>
+
+</body>
+</html>
