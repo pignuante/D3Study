@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>D3 : yAxes</title>
+    <script type="text/javascript" src="../d3/d3.js"></script>
+    <style type="text/css">
+        svg {
+            background-color: mediumpurple;
+        }
+
+        circle {
+            stroke: greenyellow;
+            fill: blue;
+        }
+    </style>
+</head>
+<body>
+<script type="text/javascript">
+    var n = 150;
+    var w = 700;
+    var h = 400;
+    var padding = 20;
+
+    var dataset = [];
+    for (var y = 0; y < n; y++) {
+        var temp = [Math.floor(Math.random() * 600), Math.floor(Math.random() * 600)];
+        dataset.push(temp);
+    }
+
+    var xScale = d3.scaleLinear()
+        .domain([0, d3.max(dataset, function (d) {
+            return d[0];
+        })])
+        .range([padding, w - padding * 2]).clamp(true);
+    var yScale = d3.scaleLinear()
+        .domain([0, d3.max(dataset, function (d) {
+            return d[1];
+        })])
+        .range([h - padding, padding]).clamp(true);
+
+    var aScale = d3.scaleSqrt()
+        .domain([0, d3.max(dataset, function (d) {
+            return d[1];
+        })])
+        .range([0, 10]).clamp(true);
+
+    // // // // // // // // // // //
+    // // // // // // // // // // //
+    // // // // // // // // // // //
+    var xAxis = d3.axisBottom()
+        .scale(xScale)
+        .ticks(5);                  //  대략 x눈금을 5개정도 생성한다.
+    //////////////////
+    //////////////////
+    // var formating = d3.format(".1%");
+    // xAxis.tickFormat(formating);
+
+
+    var yAxis = d3.axisLeft()
+        .scale(yScale)
+        .ticks(5);
+
+
+    var svg = d3.select("body")
+        .append("svg")
+        .attr("width", w)
+        .attr("height", h);
+
+    // // create svg Circle
+    svg.selectAll("circle")
+        .data(dataset)
+        .enter()
+        .append("circle")
+        .attr("cx", function (d) {
+            return xScale(d[0]);
+        }).attr("cy", function (d) {
+        return yScale(d[1]);
+    }).attr("r", function (d) {
+        return aScale(d[1]);
+    });
+
+    // create Label
+    svg.selectAll("text")
+        .data(dataset)
+        .enter()
+        .append("text")
+        .text(function (d) {
+            return d[0] + "," + d[1];
+        })
+        .attr("x", function (d) {
+            return xScale(d[0]);
+        })
+        .attr("y", function (d) {
+            return yScale(d[1]);
+        })
+
+        .attr("font-family", "D2coding")
+        .attr("font-size", "11px")
+        .attr("fill", "yellow");
+
+    //    add x axis
+    svg.append("g")
+        .attr("class", "axis")
+        .attr("transform", "translate(0," + (h - padding) + ")") // 척도를 위에서 아래로 translate
+        .call(xAxis);
+
+    // add y axis
+    svg.append("g")
+        .attr("class", "axis")
+        .attr("transform", "translate(" + padding + ", 0)")
+        .call(yAxis);
+
+</script>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
