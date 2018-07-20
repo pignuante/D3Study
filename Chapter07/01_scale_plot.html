@@ -41,7 +41,7 @@
     var r_scale = d3.scaleLinear()
         .domain([0, d3.max(data_set, function (d) {
             return d[1];
-        })]).range([1, 30]).clamp(true);
+        })]).range([1, 10]).clamp(true);
 
     var svg = d3.select("body").append("svg").attr("width", w).attr("height", h);
     svg.selectAll("circle")
